@@ -13,5 +13,5 @@ import { UserService } from '../../services/user-service';
 export class UserList {
   private userService = inject(UserService);
 
-  users = toSignal(this.userService.getUsers(), { initialValue: []});
+  users = toSignal(this.userService.getUsers(), { initialValue: [] });
 }
