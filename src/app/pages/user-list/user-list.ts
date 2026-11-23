@@ -4,9 +4,10 @@ import { RouterLink } from '@angular/router';
 import { TitleCasePipe } from '@angular/common';
 import { catchError, of, tap } from 'rxjs';
 import { UserService } from '../../services/user-service';
+import { UserSummary } from '../../components/user-summary/user-summary';
 
 @Component({
-  imports: [RouterLink, TitleCasePipe],
+  imports: [RouterLink, TitleCasePipe, UserSummary],
   selector: 'app-user-list',
   styleUrl: './user-list.css',
   templateUrl: './user-list.html',

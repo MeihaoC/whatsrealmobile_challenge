@@ -1,0 +1,25 @@
+<div class="summary">
+  <div class="card">
+    <span class="value">{{ total() }}</span>
+    <span class="label">Customers</span>
+  </div>
+
+  <div class="card">
+    <span class="value">{{ activeCount() }} / {{ inactiveCount() }}</span>
+    <span class="label">Active / Inactive</span>
+  </div>
+
+  <div class="card wide">
+    <span class="value plans">
+      @for (plan of planCounts(); track plan.type) {
+        <span>{{ plan.type | titlecase }} {{ plan.count }}</span>
+      }
+    </span>
+    <span class="label">Plans</span>
+  </div>
+
+  <div class="card" [class.has-issues]="issuesCount() > 0">
+    <span class="value">{{ issuesCount() }}</span>
+    <span class="label">Data issues</span>
+  </div>
+</div>
