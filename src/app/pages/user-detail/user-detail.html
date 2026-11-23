@@ -1,0 +1,64 @@
+<a routerLink="/users" class="back-link">← Back to customers</a>
+
+@if (user() === null) {
+  <p>Loading…</p>
+} @else if (user(); as user) {
+  <h2>{{ user.name }}</h2>
+
+  @if (user.dataWarnings?.length) {
+    <div class="warning-box">
+      <strong>⚠ Data issues</strong>
+      <ul>
+        @for (warning of user.dataWarnings; track warning) {
+          <li>{{ warning }}</li>
+        }
+      </ul>
+    </div>
+  }
+
+  <section class="card">
+    <h3>Customer info</h3>
+    <dl>
+      <dt>Email</dt>
+      <dd>{{ user.email }}</dd>
+      <dt>Age</dt>
+      <dd>{{ user.age }}</dd>
+      <dt>Customer ID</dt>
+      <dd class="mono">{{ user.id }}</dd>
+    </dl>
+  </section>
+
+  <section class="card">
+    <h3>Plan</h3>
+    <dl>
+      <dt>Plan</dt>
+      <dd>{{ user.plan.type | titlecase }}</dd>
+      <dt>Description</dt>
+      <dd>{{ user.plan.description }}</dd>
+      <dt>Status</dt>
+      <dd>
+        <span class="status" [class.active]="user.plan.status === 'active'">
+          {{ user.plan.status }}
+        </span>
+      </dd>
+    </dl>
+
+    <h4>Features</h4>
+    <ul class="features">
+      <li [class.on]="user.plan.features.conferenceCalling">
+        {{ user.plan.features.conferenceCalling ? '✓' : '✗' }} Conference calling
+      </li>
+      <li [class.on]="user.plan.features.callWaiting">
+        {{ user.plan.features.callWaiting ? '✓' : '✗' }} Call waiting
+      </li>
+      <li [class.on]="user.plan.features.voicemail">
+        {{ user.plan.features.voicemail ? '✓' : '✗' }} Voicemail
+      </li>
+    </ul>
+  </section>
+} @else {
+  <h2>User not found</h2>
+  <p>
+    There's no customer with ID <span class="mono">{{ id }}</span>.
+  </p>
+}
