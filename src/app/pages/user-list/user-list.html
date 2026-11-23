@@ -1,0 +1,37 @@
+<h2>Customers</h2>
+
+<table class="user-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Age</th>
+      <th>Plan</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (user of users(); track user.id) {
+      <tr>
+        <td>
+          <a [routerLink]="['/users', user.id]">{{ user.name }}</a>
+          @if (user.dataWarnings?.length) {
+            <span class="warning" [title]="user.dataWarnings?.join(', ')">⚠</span>
+          }
+        </td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.age }}</td>
+        <td>{{ user.plan.type | titlecase }}</td>
+        <td>
+          <span class="status" [class.active]="user.plan.status === 'active'">
+            {{ user.plan.status }}
+          </span>
+        </td>
+      </tr>
+    } @empty {
+      <tr>
+        <td colspan="5">No users found.</td>
+      </tr>
+    }
+  </tbody>
+</table>

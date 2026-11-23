@@ -10,9 +10,4 @@ import { UserService } from './services/user-service';
 })
 export class App {
   protected readonly title = signal('whatsreal-mobile');
-  private userSerivce = inject(UserService);
-
-  constructor() {
-    this.userSerivce.getUsers().subscribe(users => console.log(users));
-  }
 }
