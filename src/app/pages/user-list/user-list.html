@@ -11,8 +11,41 @@
       type="search"
       class="search-input"
       placeholder="Search by name or email"
+      [value]="searchTerm()"
       (input)="searchTerm.set(search.value)"
     />
+
+    <select #planSelect [value]="planFilter()" (change)="planFilter.set(planSelect.value)">
+      <option value="">All plans</option>
+      @for (type of planTypes(); track type) {
+        <option [value]="type">{{ type | titlecase }}</option>
+      }
+    </select>
+
+    <select #statusSelect [value]="statusFilter()" (change)="statusFilter.set(statusSelect.value)">
+      <option value="">All statuses</option>
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+    </select>
+
+    <label class="checkbox">
+      <input
+        #issuesBox
+        type="checkbox"
+        [checked]="onlyIssues()"
+        (change)="onlyIssues.set(issuesBox.checked)"
+      />
+      Only show data issues
+    </label>
+
+    <button
+      type="button"
+      class="clear-button"
+      [disabled]="!hasActiveFilters()"
+      (click)="clearFilters()"
+    >
+      Clear filters
+    </button>
   </div>
 
   <p class="result-count">Showing {{ filteredUsers().length }} of {{ users().length }} customers</p>
@@ -51,7 +84,7 @@
             @if (users().length === 0) {
               There are no customers yet.
             } @else {
-              No customers match your search.
+              No customers match your search or filters.
             }
           </td>
         </tr>

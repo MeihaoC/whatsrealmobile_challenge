@@ -9,6 +9,35 @@
   margin-bottom: 12px;
 }
 
+.toolbar select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: white;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #444;
+}
+
+.clear-button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.clear-button:disabled {
+  color: #aaa;
+  cursor: default;
+}
+
 .search-input {
   flex: 1;
   min-width: 220px;

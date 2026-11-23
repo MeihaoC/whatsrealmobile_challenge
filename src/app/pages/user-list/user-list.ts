@@ -28,13 +28,44 @@ export class UserList {
   );
   
   searchTerm = signal('');
+  planFilter = signal('');
+  statusFilter = signal(''); 
+  onlyIssues = signal(false);
+
+  planTypes = computed(() => {
+    const types = this.users().map(user => user.plan.type);
+    return [...new Set(types)].sort();
+  });
 
   filteredUsers = computed(() => {
     const term = this.searchTerm().trim().toLowerCase();
+    const plan = this.planFilter();
+    const status = this.statusFilter();
+    const onlyIssues = this.onlyIssues();
 
-    return this.users().filter(user =>
-      user.name.toLowerCase().includes(term) ||
-      user.email.toLowerCase().includes(term)
-    );
+    return this.users().filter(user => {
+      const matchesSearch = 
+        user.name.toLowerCase().includes(term) ||
+        user.email.toLowerCase().includes(term);
+      const matchesPlan = plan === '' || user.plan.type === plan;
+      const matchesStatus = status === '' || user.plan.status === status;
+      const matchesIssues = !onlyIssues || (user.dataWarnings?.length ?? 0) > 0;
+
+      return matchesSearch && matchesPlan && matchesStatus && matchesIssues;
+    });
   });
+
+  hasActiveFilters = computed(() =>
+    this.searchTerm() !== '' ||
+    this.planFilter() !== '' ||
+    this.statusFilter() !== '' ||
+    this.onlyIssues()
+  );
+
+  clearFilters() {
+    this.searchTerm.set('');
+    this.planFilter.set('');
+    this.statusFilter.set('');
+    this.onlyIssues.set(false);
+  }
 }
