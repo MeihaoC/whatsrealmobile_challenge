@@ -47,7 +47,13 @@
         </tr>
       } @empty {
         <tr>
-          <td colspan="5">No customers match your search.</td>
+          <td colspan="5">
+            @if (users().length === 0) {
+              There are no customers yet.
+            } @else {
+              No customers match your search.
+            }
+          </td>
         </tr>
       }
     </tbody>
