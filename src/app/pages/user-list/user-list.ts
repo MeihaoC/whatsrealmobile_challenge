@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { TitleCasePipe } from '@angular/common';
@@ -14,4 +14,15 @@ export class UserList {
   private userService = inject(UserService);
 
   users = toSignal(this.userService.getUsers(), { initialValue: [] });
+  
+  searchTerm = signal('');
+
+  filteredUsers = computed(() => {
+    const term = this.searchTerm().trim().toLowerCase();
+
+    return this.users().filter(user =>
+      user.name.toLowerCase().includes(term) ||
+      user.email.toLowerCase().includes(term)
+    );
+  });
 }

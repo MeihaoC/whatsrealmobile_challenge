@@ -1,5 +1,17 @@
 <h2>Customers</h2>
 
+<div class="toolbar">
+  <input
+    #search
+    type="search"
+    class="search-input"
+    placeholder="Search by name or email"
+    (input)="searchTerm.set(search.value)"
+  />
+</div>
+
+<p class="result-count">Showing {{ filteredUsers().length }} of {{ users().length }} customers</p>
+
 <table class="user-table">
   <thead>
     <tr>
@@ -11,7 +23,7 @@
     </tr>
   </thead>
   <tbody>
-    @for (user of users(); track user.id) {
+    @for (user of filteredUsers(); track user.id) {
       <tr>
         <td>
           <a [routerLink]="['/users', user.id]">{{ user.name }}</a>
@@ -30,7 +42,7 @@
       </tr>
     } @empty {
       <tr>
-        <td colspan="5">No users found.</td>
+        <td colspan="5">No customers match your search.</td>
       </tr>
     }
   </tbody>
