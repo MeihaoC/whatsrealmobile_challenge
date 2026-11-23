@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { TitleCasePipe } from '@angular/common';
+import { catchError, of, tap } from 'rxjs';
 import { UserService } from '../../services/user-service';
 
 @Component({
@@ -12,8 +13,19 @@ import { UserService } from '../../services/user-service';
 })
 export class UserList {
   private userService = inject(UserService);
+  
+  status = signal<'loading' | 'loaded' | 'error'>('loading');
 
-  users = toSignal(this.userService.getUsers(), { initialValue: [] });
+  users = toSignal(
+    this.userService.getUsers().pipe(
+      tap(() => this.status.set('loaded')),
+      catchError(() => {
+        this.status.set('error');
+        return of([]);
+      })
+    ), 
+    { initialValue: [] }
+  );
   
   searchTerm = signal('');
 

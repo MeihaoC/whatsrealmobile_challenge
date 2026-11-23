@@ -1,49 +1,55 @@
 <h2>Customers</h2>
 
-<div class="toolbar">
-  <input
-    #search
-    type="search"
-    class="search-input"
-    placeholder="Search by name or email"
-    (input)="searchTerm.set(search.value)"
-  />
-</div>
+@if (status() === 'loading') {
+  <p>Loading customers...</p>
+} @else if (status() === 'error') {
+  <p class="error">Couldn't load customers. Please try again later.</p>
+} @else {
+  <div class="toolbar">
+    <input
+      #search
+      type="search"
+      class="search-input"
+      placeholder="Search by name or email"
+      (input)="searchTerm.set(search.value)"
+    />
+  </div>
 
-<p class="result-count">Showing {{ filteredUsers().length }} of {{ users().length }} customers</p>
+  <p class="result-count">Showing {{ filteredUsers().length }} of {{ users().length }} customers</p>
 
-<table class="user-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Age</th>
-      <th>Plan</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (user of filteredUsers(); track user.id) {
+  <table class="user-table">
+    <thead>
       <tr>
-        <td>
-          <a [routerLink]="['/users', user.id]">{{ user.name }}</a>
-          @if (user.dataWarnings?.length) {
-            <span class="warning" [title]="user.dataWarnings?.join(', ')">⚠</span>
-          }
-        </td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.age }}</td>
-        <td>{{ user.plan.type | titlecase }}</td>
-        <td>
-          <span class="status" [class.active]="user.plan.status === 'active'">
-            {{ user.plan.status }}
-          </span>
-        </td>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Plan</th>
+        <th>Status</th>
       </tr>
-    } @empty {
-      <tr>
-        <td colspan="5">No customers match your search.</td>
-      </tr>
-    }
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      @for (user of filteredUsers(); track user.id) {
+        <tr>
+          <td>
+            <a [routerLink]="['/users', user.id]">{{ user.name }}</a>
+            @if (user.dataWarnings?.length) {
+              <span class="warning" [title]="user.dataWarnings?.join(', ')">⚠</span>
+            }
+          </td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.age }}</td>
+          <td>{{ user.plan.type | titlecase }}</td>
+          <td>
+            <span class="status" [class.active]="user.plan.status === 'active'">
+              {{ user.plan.status }}
+            </span>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5">No customers match your search.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

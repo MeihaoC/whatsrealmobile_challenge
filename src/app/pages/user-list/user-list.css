@@ -1,3 +1,7 @@
+.error {
+  color: #b42318;
+}
+
 .toolbar {
   display: flex;
   flex-wrap: wrap;
