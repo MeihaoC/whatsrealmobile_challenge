@@ -14,7 +14,7 @@ import { UserSummary } from '../../components/user-summary/user-summary';
 })
 export class UserList {
   private userService = inject(UserService);
-  
+
   status = signal<'loading' | 'loaded' | 'error'>('loading');
 
   users = toSignal(
@@ -23,18 +23,18 @@ export class UserList {
       catchError(() => {
         this.status.set('error');
         return of([]);
-      })
-    ), 
-    { initialValue: [] }
+      }),
+    ),
+    { initialValue: [] },
   );
-  
+
   searchTerm = signal('');
   planFilter = signal('');
-  statusFilter = signal(''); 
+  statusFilter = signal('');
   onlyIssues = signal(false);
 
   planTypes = computed(() => {
-    const types = this.users().map(user => user.plan.type);
+    const types = this.users().map((user) => user.plan.type);
     return [...new Set(types)].sort();
   });
 
@@ -44,10 +44,9 @@ export class UserList {
     const status = this.statusFilter();
     const onlyIssues = this.onlyIssues();
 
-    return this.users().filter(user => {
-      const matchesSearch = 
-        user.name.toLowerCase().includes(term) ||
-        user.email.toLowerCase().includes(term);
+    return this.users().filter((user) => {
+      const matchesSearch =
+        user.name.toLowerCase().includes(term) || user.email.toLowerCase().includes(term);
       const matchesPlan = plan === '' || user.plan.type === plan;
       const matchesStatus = status === '' || user.plan.status === status;
       const matchesIssues = !onlyIssues || (user.dataWarnings?.length ?? 0) > 0;
@@ -64,9 +63,7 @@ export class UserList {
     computation: () => 1,
   });
 
-  totalPages = computed(() =>
-    Math.max(1, Math.ceil(this.filteredUsers().length / this.pageSize))
-  );
+  totalPages = computed(() => Math.max(1, Math.ceil(this.filteredUsers().length / this.pageSize)));
 
   pagedUsers = computed(() => {
     const start = (this.currentPage() - 1) * this.pageSize;
@@ -85,11 +82,12 @@ export class UserList {
     }
   }
 
-  hasActiveFilters = computed(() =>
-    this.searchTerm() !== '' ||
-    this.planFilter() !== '' ||
-    this.statusFilter() !== '' ||
-    this.onlyIssues()
+  hasActiveFilters = computed(
+    () =>
+      this.searchTerm() !== '' ||
+      this.planFilter() !== '' ||
+      this.statusFilter() !== '' ||
+      this.onlyIssues(),
   );
 
   clearFilters() {

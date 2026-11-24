@@ -14,7 +14,7 @@ export class UserDetail {
   private route = inject(ActivatedRoute);
   private userService = inject(UserService);
 
-  private id = this.route.snapshot.paramMap.get('id') ?? '';
+  protected readonly id = this.route.snapshot.paramMap.get('id') ?? '';
 
   // null = still loading, undefined = no user with this id
   user = toSignal(this.userService.getUserById(this.id), { initialValue: null });

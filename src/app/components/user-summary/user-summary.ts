@@ -13,14 +13,12 @@ export class UserSummary {
 
   total = computed(() => this.users().length);
 
-  activeCount = computed(() =>
-    this.users().filter(user => user.plan.status === 'active').length
-  );
+  activeCount = computed(() => this.users().filter((user) => user.plan.status === 'active').length);
 
   inactiveCount = computed(() => this.total() - this.activeCount());
 
-  issuesCount = computed(() =>
-    this.users().filter(user => (user.dataWarnings?.length ?? 0) > 0).length
+  issuesCount = computed(
+    () => this.users().filter((user) => (user.dataWarnings?.length ?? 0) > 0).length,
   );
 
   planCounts = computed(() => {

@@ -54,7 +54,7 @@ describe('UserService', () => {
         makeUser('a', 'Krystal Johnson'),
       ]);
 
-      const ids = result.map(user => user.id);
+      const ids = result.map((user) => user.id);
       expect(new Set(ids).size).toBe(ids.length);
     });
 

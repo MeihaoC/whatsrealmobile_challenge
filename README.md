@@ -69,13 +69,13 @@ Unit tests (Vitest) cover:
 - The detail page showing "User not found" for an unknown ID
 - Basic creation tests for each component
 
-I also checked the error state by pointing the service at a file that doesn't exist, and checked the layout at phone width.
+I also checked the layout at phone width.
 
 ## What I'd do with more time
 
 - Show the same loading and error states on the detail page (right now only the list handles a failed request)
 - Sorting by clicking the column headers
-- Keep the search and filters in the URL so a filtered view can be shared or bookmarked
+- Keep the search, filters and page in the URL, so a filtered view can be shared or bookmarked and isn't lost when you come back from a detail page
 - Card layout instead of a scrolling table on small screens
 - End-to-end tests for the main flows
 - Connect to a real API, with server-side search and pagination
