@@ -3,3 +3,25 @@ body {
   margin: 0;
   font-family: system-ui, sans-serif;
 }
+
+/* form controls don't use the page font by default */
+input,
+select,
+button {
+  font: inherit;
+}
+
+/* status badge, used on both the list and detail pages */
+.status {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  background: #eee;
+  color: #666;
+  text-transform: capitalize;
+}
+
+.status.active {
+  background: #e3f6e8;
+  color: #1a7f37;
+}

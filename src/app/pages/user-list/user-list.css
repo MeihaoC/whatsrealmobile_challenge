@@ -92,23 +92,11 @@
   text-align: left;
   padding: 10px 12px;
   border-bottom: 1px solid #e5e5e5;
+  white-space: nowrap;
 }
 
 .user-table tbody tr:hover {
   background: #f7f7f7;
-}
-
-.status {
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  background: #eee;
-  color: #666;
-}
-
-.status.active {
-  background: #e3f6e8;
-  color: #1a7f37;
 }
 
 .warning {

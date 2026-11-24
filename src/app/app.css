@@ -14,3 +14,13 @@
   margin: 0 auto;
   padding: 24px;
 }
+
+@media (max-width: 600px) {
+  .app-header {
+    padding: 14px 16px;
+  }
+
+  .app-main {
+    padding: 16px;
+  }
+}

@@ -28,6 +28,7 @@ dt {
 
 dd {
   margin: 0;
+  overflow-wrap: anywhere;
 }
 
 .mono {
@@ -61,15 +62,17 @@ dd {
   color: #1a7f37;
 }
 
-.status {
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  background: #eee;
-  color: #666;
-}
+@media (max-width: 600px) {
+  .card {
+    padding: 14px 16px;
+  }
 
-.status.active {
-  background: #e3f6e8;
-  color: #1a7f37;
+  dl {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  dd {
+    margin-bottom: 10px;
+  }
 }
