@@ -63,7 +63,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (user of filteredUsers(); track user.id) {
+        @for (user of pagedUsers(); track user.id) {
           <tr>
             <td>
               <a [routerLink]="['/users', user.id]">{{ user.name }}</a>
@@ -93,5 +93,27 @@
         }
       </tbody>
     </table>
+  </div>
+
+  <div class="pagination">
+    <button
+      type="button"
+      class="page-button"
+      [disabled]="currentPage() === 1"
+      (click)="previousPage()"
+    >
+      ← Previous
+    </button>
+
+    <span class="page-info">Page {{ currentPage() }} of {{ totalPages() }}</span>
+
+    <button
+      type="button"
+      class="page-button"
+      [disabled]="currentPage() === totalPages()"
+      (click)="nextPage()"
+    >
+      Next →
+    </button>
   </div>
 }

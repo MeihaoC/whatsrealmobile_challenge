@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { TitleCasePipe } from '@angular/common';
@@ -55,6 +55,35 @@ export class UserList {
       return matchesSearch && matchesPlan && matchesStatus && matchesIssues;
     });
   });
+
+  readonly pageSize = 5;
+
+  // goes back to page 1 whenever the filtered list changes
+  currentPage = linkedSignal({
+    source: this.filteredUsers,
+    computation: () => 1,
+  });
+
+  totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.filteredUsers().length / this.pageSize))
+  );
+
+  pagedUsers = computed(() => {
+    const start = (this.currentPage() - 1) * this.pageSize;
+    return this.filteredUsers().slice(start, start + this.pageSize);
+  });
+
+  previousPage() {
+    if (this.currentPage() > 1) {
+      this.currentPage.set(this.currentPage() - 1);
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage() < this.totalPages()) {
+      this.currentPage.set(this.currentPage() + 1);
+    }
+  }
 
   hasActiveFilters = computed(() =>
     this.searchTerm() !== '' ||
